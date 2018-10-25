@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Grid, Button } from "semantic-ui-react";
 import EventList from "../EventList/EventList";
 import EventForm from "../EventForm/EventForm";
-
+import cuid from 'cuid'
 // this is the PARENT component we are passing
 // down events [] to child sibling components
 
@@ -81,6 +81,16 @@ class EventDashboard extends Component {
     });
   };
 
+  handleCreateEvent = (newEvent) => {
+    newEvent.id = cuid()
+    newEvent.hostPhotoURL = './assets/user.png'
+    const updatedEvents = [...this.state.events, newEvent]
+    this.setState({
+      events: updatedEvents, 
+      isOpen: false
+    })
+  }
+
   render() {
     return (
       // grid system L 10 w R 6 w
@@ -92,7 +102,7 @@ class EventDashboard extends Component {
         <Grid.Column width={6}>
           <Button onClick={this.handleFormOpen} positive content="Create" />
           {this.state.isOpen && (
-            <EventForm handleFormCancel={this.handleFormCancel} />
+            <EventForm createEvent={this.handleCreateEvent} handleFormCancel={this.handleFormCancel} />
           )}
         </Grid.Column>
       </Grid>
