@@ -9,13 +9,13 @@ import cuid from 'cuid'
 const eventsData = [
   {
     id: "1",
-    title: "Trip to Tower of London",
+    title: "Review Business Plan",
     date: "2018-03-27T11:00:00+00:00",
-    category: "culture",
+    category: "business",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sollicitudin ligula eu leo tincidunt, quis scelerisque magna dapibus. Sed eget ipsum vel arcu vehicula ullamcorper.",
+      "Set aside 4 hours this week to review business plan outline, research competitive markets, valuation, mission and budget",
     city: "London, UK",
-    venue: "Tower of London, St Katharine's & Wapping, London",
+    venue: "London Public Library",
     hostedBy: "Bob",
     hostPhotoURL: "https://randomuser.me/api/portraits/men/20.jpg",
     attendees: [
@@ -33,13 +33,13 @@ const eventsData = [
   },
   {
     id: "2",
-    title: "Trip to Punch and Judy Pub",
+    title: "Startup Pitch Investor Meeting",
     date: "2018-03-28T14:00:00+00:00",
     category: "drinks",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sollicitudin ligula eu leo tincidunt, quis scelerisque magna dapibus. Sed eget ipsum vel arcu vehicula ullamcorper.",
-    city: "London, UK",
-    venue: "Punch & Judy, Henrietta Street, London, UK",
+      "Investor pre seed event pitch",
+    city: "Hollywood, CA",
+    venue: "Workspace, Sunset Blvd.",
     hostedBy: "Tom",
     hostPhotoURL: "https://randomuser.me/api/portraits/men/22.jpg",
     attendees: [
@@ -63,7 +63,8 @@ class EventDashboard extends Component {
 
   state = {
     events: eventsData,
-    isOpen: false
+    isOpen: false, 
+    selectedEvent: null
   };
   // this.handleFormOpen = this.handleFormOpen.bind(this);
   // this.handleFormCancel = this.handleFormCancel.bind(this);
@@ -71,6 +72,7 @@ class EventDashboard extends Component {
 
   handleFormOpen = () => {
     this.setState({
+      selectedEvent: null,
       isOpen: true
     });
   };
@@ -78,6 +80,24 @@ class EventDashboard extends Component {
   handleFormCancel = () => {
     this.setState({
       isOpen: false
+    });
+  };
+
+  handleUpdateEvent = (updatedEvent) => {
+    this.setState({
+      events: this.state.events.map(event => {
+        if(event.id === updatedEvent.id) {
+          return Object.assign({}, updatedEvent)
+        }
+      })
+    })
+
+  }
+
+  handleEditEvent = (eventToUpdate) => () => {
+    this.setState({
+      selectedEvent: eventToUpdate,
+      isOpen: true
     });
   };
 
@@ -92,17 +112,18 @@ class EventDashboard extends Component {
   }
 
   render() {
+    const { selectedEvent } = this.state;
     return (
       // grid system L 10 w R 6 w
       <Grid>
         <Grid.Column width={10}>
-          <EventList events={this.state.events} />
+          <EventList onEventEdit={this.handleEditEvent} events={this.state.events} />
         </Grid.Column>
 
         <Grid.Column width={6}>
           <Button onClick={this.handleFormOpen} positive content="Create" />
           {this.state.isOpen && (
-            <EventForm createEvent={this.handleCreateEvent} handleFormCancel={this.handleFormCancel} />
+            <EventForm selectedEvent={selectedEvent} createEvent={this.handleCreateEvent} handleFormCancel={this.handleFormCancel} />
           )}
         </Grid.Column>
       </Grid>
