@@ -1,5 +1,4 @@
-import { SubmissionError } from "redux-form";
-import { LOGIN_USER } from "./authConstants";
+import { SubmissionError, reset } from "redux-form";
 import { closeModal } from "../modals/modalActions";
 
 export const login = creds => {
@@ -13,18 +12,40 @@ export const login = creds => {
     } catch (error) {
       console.log(error);
       throw new SubmissionError({
-        _error: error.message
+        _error: "Login failed"
       });
     }
   };
 };
 
-export const registerUser = user =>
-  async(dispatch, getState, { getFirebase, getFirestore });
-const firebase = getFirebase();
-const firestore = getFirestore();
-
-try {
-  // create user in auth
-  // update auth profile
-} catch (error) {}
+export const registerUser = user => async (
+  dispatch,
+  getState,
+  { getFirebase, getFirestore }
+) => {
+  const firebase = getFirebase();
+  const firestore = getFirestore();
+  try {
+    // create the user in firebase auth
+    let createdUser = await firebase
+      .auth()
+      .createUserWithEmailAndPassword(user.email, user.password);
+    console.log(createdUser);
+    // update the auth profile
+    await createdUser.updateProfile({
+      displayName: user.displayName
+    });
+    // create a new profile in firestore
+    let newUser = {
+      displayName: user.displayName,
+      createdAt: firestore.FieldValue.serverTimestamp()
+    };
+    await firestore.set(`users/${createdUser.uid}`, { ...newUser });
+    dispatch(closeModal());
+  } catch (error) {
+    console.log(error);
+    throw new SubmissionError({
+      _error: error.message
+    });
+  }
+};
