@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Button, Icon } from "semantic-ui-react";
+import { Button } from "semantic-ui-react";
 import { incrementCounter, decrementCounter } from "./TestActions";
 import Script from "react-load-script";
 import PlacesAutocomplete, {
   geocodeByAddress,
   getLatLng
 } from "react-places-autocomplete";
-import GoogleMapReact from "google-map-react";
+import { openModal } from "../modals/modalActions";
 
 const mapState = state => ({
   data: state.test.data
@@ -15,10 +15,9 @@ const mapState = state => ({
 
 const actions = {
   incrementCounter,
-  decrementCounter
+  decrementCounter,
+  openModal
 };
-
-const Marker = () => <Icon name="marker" size="big" color="red" />;
 
 class TestComponent extends Component {
   static defaultProps = {
@@ -59,7 +58,7 @@ class TestComponent extends Component {
       onChange: this.onChange
     };
 
-    const { incrementCounter, decrementCounter, data } = this.props;
+    const { incrementCounter, decrementCounter, data, openModal } = this.props;
 
     return (
       <div>
@@ -71,6 +70,12 @@ class TestComponent extends Component {
         <h3>The answer is: {data} </h3>
         <Button onClick={incrementCounter} color="green" content="Increment" />
         <Button onClick={decrementCounter} color="red" content="Decrement" />
+        <Button
+          onClick={() => openModal("TestModal", { data: 43 })}
+          color="teal"
+          content="Open Modal"
+        />
+
         <br />
         <br />
 
@@ -80,18 +85,6 @@ class TestComponent extends Component {
           )}
           <button type="submit">Submit</button>
         </form>
-
-        <div style={{ height: "300px", width: "100%" }}>
-          <GoogleMapReact
-            bootstrapURLKeys={{
-              key: "AIzaSyA6poNHzHyxN8mL_gQphg2gBP6wRn_vMHw"
-            }}
-            defaultCenter={this.props.center}
-            defaultZoom={this.props.zoom}
-          >
-            <Marker lat={59.955413} lng={30.337844} text={"Kreyser Avrora"} />
-          </GoogleMapReact>
-        </div>
       </div>
     );
   }
