@@ -1,15 +1,30 @@
-import { LOGIN_USER, SIGN_OUT_USER } from "./authConstants";
+import { SubmissionError } from "redux-form";
+import { LOGIN_USER } from "./authConstants";
 import { closeModal } from "../modals/modalActions";
 
 export const login = creds => {
-  return dispatch => {
-    dispatch({ type: LOGIN_USER, payload: { creds } });
-    dispatch(closeModal());
+  return async (dispatch, getState, { getFirebase }) => {
+    const firebase = getFirebase();
+    try {
+      await firebase
+        .auth()
+        .signInWithEmailAndPassword(creds.email, creds.password);
+      dispatch(closeModal());
+    } catch (error) {
+      console.log(error);
+      throw new SubmissionError({
+        _error: error.message
+      });
+    }
   };
 };
 
-export const logout = () => {
-  return {
-    type: SIGN_OUT_USER
-  };
-};
+export const registerUser = user =>
+  async(dispatch, getState, { getFirebase, getFirestore });
+const firebase = getFirebase();
+const firestore = getFirestore();
+
+try {
+  // create user in auth
+  // update auth profile
+} catch (error) {}
