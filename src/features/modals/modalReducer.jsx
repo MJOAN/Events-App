@@ -3,7 +3,6 @@ import { createReducer } from "../../app/common/util/reducerUtil";
 
 const initialState = null;
 
-// set state from null to type of what it is
 export const openModal = (state, payload) => {
   const { modalType, modalProps } = payload;
   return { modalType, modalProps };

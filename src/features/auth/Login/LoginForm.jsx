@@ -1,8 +1,8 @@
 import React from "react";
 import { Form, Segment, Button } from "semantic-ui-react";
+import { connect } from "react-redux";
 import { Field, reduxForm } from "redux-form";
 import TextInput from "../../../app/common/form/TextInput";
-import { connect } from "react-redux";
 import { login } from "../authActions";
 
 const actions = {
@@ -26,7 +26,7 @@ const LoginForm = ({ login, handleSubmit }) => {
           placeholder="password"
         />
         <Button fluid size="large" color="teal">
-          Login
+          Sign In
         </Button>
       </Segment>
     </Form>

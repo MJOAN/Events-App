@@ -5,12 +5,11 @@ const initialState = {
   currentUser: {}
 };
 
-// set state from null to type of what it is
 export const loginUser = (state, payload) => {
   return {
     ...state,
     authenticated: true,
-    currentuser: payload.creds.email
+    currentUser: payload.creds.email
   };
 };
 

@@ -11,7 +11,7 @@ class RegisterModal extends Component {
   render() {
     return (
       <Modal size="mini" open={true} onClose={this.props.closeModal}>
-        <Modal.Header>Register for the Events App!</Modal.Header>
+        <Modal.Header>Register for Events App!</Modal.Header>
         <Modal.Content>
           <Modal.Description>
             <RegisterForm />
