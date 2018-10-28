@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Icon } from "semantic-ui-react";
 
-const SocialLogin = () => {
+const SocialLogin = ({ socialLogin }) => {
   return (
     <div>
       <Button
@@ -13,7 +13,12 @@ const SocialLogin = () => {
         <Icon name="facebook" /> Sign In with Facebook
       </Button>
 
-      <Button type="button" fluid color="google plus">
+      <Button
+        onClick={() => socialLogin("google")}
+        type="button"
+        fluid
+        color="google plus"
+      >
         <Icon name="google plus" />
         Sign In with Google
       </Button>

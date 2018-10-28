@@ -10,7 +10,8 @@ const rrfConfig = {
   // react redux firebase config
   userProfile: "users",
   attachAuthIsReady: true,
-  useFirestoreForProfile: true
+  useFirestoreForProfile: true,
+  updateProfileOnLogin: false
 };
 
 export const configureStore = preloadedState => {
