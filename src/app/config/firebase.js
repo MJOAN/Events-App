@@ -6,7 +6,7 @@ const firebaseConfig = {
   authDomain: "events-app-220700.firebaseapp.com",
   databaseURL: "https://events-app-220700.firebaseio.com",
   projectId: "events-app-220700",
-  storageBucket: "",
+  storageBucket: "events-app-220700.appspot.com",
   messagingSenderId: "513556123184"
 };
 
