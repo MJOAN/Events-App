@@ -22,6 +22,8 @@ class EventDetailedInfo extends Component {
 
   render() {
     const { event } = this.props;
+    // let eventDate;
+    // if (event.date) eventDate = event.date.toDate();
     return (
       <Segment.Group>
         <Segment attached="top">
