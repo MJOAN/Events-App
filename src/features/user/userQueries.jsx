@@ -1,7 +1,3 @@
-import React, { Component } from "react";
-import { compose } from "redux";
-import { Grid } from "semantic-ui-react";
-import { connect } from "react-redux";
 export const userDetailedQuery = ({ auth, userUid }) => {
   if (userUid !== null) {
     return [

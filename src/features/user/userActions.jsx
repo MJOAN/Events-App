@@ -6,6 +6,8 @@ import {
   asyncActionFinish,
   asyncActionError
 } from "../async/asyncActions";
+import firebase from "../../app/config/firebase";
+import { FETCH_EVENTS } from "../events/eventConstants";
 
 export const updateProfile = user => async (
   dispatch,
@@ -39,22 +41,24 @@ export const uploadProfileImage = (file, fileName) => async (
   const options = {
     name: imageName
   };
-
   try {
-    dispatch(asyncActionStart);
-    // upload file to firebase storage
+    dispatch(asyncActionStart());
+    // upload the file to fb storage
     let uploadedFile = await firebase.uploadFile(path, file, null, options);
     // get url of image
     let downloadURL = await uploadedFile.uploadTaskSnapshot.downloadURL;
-    // get userdoc from firestore
+    // get the userdoc from firestore
     let userDoc = await firestore.get(`users/${user.uid}`);
-    // check user has img alreadey, else add to prolfile
+    // check if user has photo, if not update profile
     if (!userDoc.data().photoURL) {
-      await firebase.updateProfile({ photoURL: downloadURL });
-      await user.updateProfile({ photoURL: downloadURL });
+      await firebase.updateProfile({
+        photoURL: downloadURL
+      });
+      await user.updateProfile({
+        photoURL: downloadURL
+      });
     }
-
-    // add photo to collection
+    // add the new photo to photos collection
     await firestore.add(
       {
         collection: "users",
@@ -66,10 +70,10 @@ export const uploadProfileImage = (file, fileName) => async (
         url: downloadURL
       }
     );
-    dispatch(asyncActionFinish);
+    dispatch(asyncActionFinish());
   } catch (error) {
     console.log(error);
-    dispatch(asyncActionError);
+    dispatch(asyncActionError());
     throw new Error("Problem uploading photo");
   }
 };
@@ -124,7 +128,7 @@ export const goingToEvent = event => async (
     joinDate: Date.now(),
     photoURL: photoURL || "/assets/user.png",
     displayName: user.displayName,
-    host: true
+    host: false
   };
   try {
     await firestore.update(`events/${event.id}`, {
@@ -136,10 +140,10 @@ export const goingToEvent = event => async (
       eventDate: event.date,
       host: false
     });
-    toastr.success("Success", "You have signed up to this event!");
+    toastr.success("Success", "You have signed up to the event");
   } catch (error) {
     console.log(error);
-    toastr.error("Oops", "Problem signing up to event.");
+    toastr.error("Oops", "Problem signing up to event");
   }
 };
 
@@ -155,9 +159,63 @@ export const cancelGoingToEvent = event => async (
       [`attendees.${user.uid}`]: firestore.FieldValue.delete()
     });
     await firestore.delete(`event_attendee/${event.id}_${user.uid}`);
-    toastr.success("Success", "You have removed yourself from the event.");
+    toastr.success("Success", "You have removed yourself from the event");
   } catch (error) {
     console.log(error);
-    toastr.error("Oops", "Something went wrong.");
+    toastr.error("Oops", "something went wrong");
+  }
+};
+
+export const getUserEvents = (userUid, activeTab) => async (
+  dispatch,
+  getState
+) => {
+  dispatch(asyncActionStart());
+  const firestore = firebase.firestore();
+  const today = new Date(Date.now());
+  let eventsRef = firestore.collection("event_attendee");
+  let query;
+  switch (activeTab) {
+    case 1: // past events
+      query = eventsRef
+        .where("userUid", "==", userUid)
+        .where("eventDate", "<=", today)
+        .orderBy("eventDate", "desc");
+      break;
+    case 2: // future events
+      query = eventsRef
+        .where("userUid", "==", userUid)
+        .where("eventDate", ">=", today)
+        .orderBy("eventDate");
+      break;
+    case 3: // hosted events
+      query = eventsRef
+        .where("userUid", "==", userUid)
+        .where("host", "==", true)
+        .orderBy("eventDate", "desc");
+      break;
+    default:
+      query = eventsRef
+        .where("userUid", "==", userUid)
+        .orderBy("eventDate", "desc");
+  }
+  try {
+    let querySnap = await query.get();
+    let events = [];
+
+    for (let i = 0; i < querySnap.docs.length; i++) {
+      let evt = await firestore
+        .collection("events")
+        .doc(querySnap.docs[i].data().eventId)
+        .get();
+      events.push({ ...evt.data(), id: evt.id });
+    }
+
+    dispatch({ type: FETCH_EVENTS, payload: { events } });
+
+    dispatch(asyncActionFinish());
+  } catch (error) {
+    console.log(error);
+    dispatch(asyncActionError());
   }
 };

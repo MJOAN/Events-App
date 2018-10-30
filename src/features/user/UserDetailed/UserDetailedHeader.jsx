@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { Grid, Header, Item, Segment } from "semantic-ui-react";
 import differenceInYears from "date-fns/difference_in_years";
 

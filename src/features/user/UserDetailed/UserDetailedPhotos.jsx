@@ -1,7 +1,5 @@
-import React, { Component } from "react";
+import React from "react";
 import { Grid, Header, Image, Segment } from "semantic-ui-react";
-import { connect } from "react-redux";
-import { firestoreConnect } from "react-redux-firebase";
 import LazyLoad from "react-lazyload";
 
 const UserDetailedPhotos = ({ photos }) => {

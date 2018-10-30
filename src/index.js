@@ -5,7 +5,6 @@ import { Provider } from "react-redux";
 import ReduxToastr from "react-redux-toastr";
 import "semantic-ui-css/semantic.min.css";
 import "./index.css";
-
 import "react-redux-toastr/lib/css/react-redux-toastr.min.css";
 import App from "./app/layouts/App";
 import * as serviceWorker from "./serviceWorker";
@@ -42,6 +41,5 @@ if (module.hot) {
 
 store.firebaseAuthIsReady.then(() => {
   render();
+  serviceWorker.unregister();
 });
-
-serviceWorker.unregister();

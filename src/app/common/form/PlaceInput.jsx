@@ -23,7 +23,6 @@ class PlaceInput extends Component {
   render() {
     const {
       input,
-      width,
       onSelect,
       placeholder,
       options,
