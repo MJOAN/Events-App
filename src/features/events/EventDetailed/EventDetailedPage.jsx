@@ -51,7 +51,7 @@ class EventDetailedPage extends Component {
       auth,
       goingToEvent,
       cancelGoingToEvent,
-      addEventComments,
+      addEventComment,
       eventChat
     } = this.props;
     const attendees =

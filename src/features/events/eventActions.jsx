@@ -35,7 +35,7 @@ export const updateEvent = event => {
   return async (dispatch, getState, { getFirestore }) => {
     const firestore = getFirestore();
     if (event.date !== getState().firestore.ordered.events[0].date) {
-      event.date = moment(event.date);
+      event.date = moment(event.date).toDate();
     }
     try {
       await firestore.update(`events/${event.id}`, event);
@@ -67,11 +67,13 @@ export const cancelToggle = (cancelled, eventId) => async (
   }
 };
 
-export const getEventsForDashboard = () => async (dispatch, getState) => {
+export const getEventsForDashboard = lastEvent => async (
+  dispatch,
+  getState
+) => {
   let today = new Date(Date.now());
   const firestore = firebase.firestore();
   const eventsRef = firestore.collection("events");
-  let lastEvent;
   // console.log("eventsQuery", eventsQuery);
   try {
     dispatch(asyncActionStart());
@@ -85,7 +87,7 @@ export const getEventsForDashboard = () => async (dispatch, getState) => {
 
     lastEvent
       ? (query = eventsRef
-          // .where("date", ">=", today)
+          .where("date", ">=", today)
           .orderBy("date")
           .startAfter(startAfter)
           .limit(2))
@@ -98,7 +100,7 @@ export const getEventsForDashboard = () => async (dispatch, getState) => {
     // check in querysnap to see h ow many docs we have?
     if (querySnap.docs.length === 0) {
       dispatch(asyncActionFinish());
-      return;
+      return querySnap;
     }
 
     let events = [];
@@ -134,6 +136,7 @@ export const addEventComment = (eventId, values, parentId) => async (
     text: values.comment,
     date: Date.now()
   };
+  console.log("newComment", newComment, newComment.parentId);
   try {
     await firebase.push(`event_chat/${eventId}`, newComment);
   } catch (error) {

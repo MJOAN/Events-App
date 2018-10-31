@@ -6,7 +6,7 @@ export const objectToArray = object => {
 };
 
 export const createNewEvent = (user, photoURL, event) => {
-  event.date = moment(event.date).toDate();
+  event.date = moment(event.date);
   return {
     ...event,
     hostUid: user.uid,

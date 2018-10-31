@@ -60,3 +60,12 @@ typings/
 
 # next.js build output
 .next
+
+# firebase
+functions/node_modules/**
+
+# env files
+.env
+.env.example
+.env.local
+.env.staging
