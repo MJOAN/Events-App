@@ -15,7 +15,12 @@ const rrfConfig = {
 };
 
 export const configureStore = preloadedState => {
-  const middlewares = [thunk.withExtraArgument({ getFirebase, getFirestore })];
+  const middlewares = [
+    thunk.withExtraArgument({
+      getFirebase,
+      getFirestore
+    })
+  ];
   const middlewareEnhancer = applyMiddleware(...middlewares);
 
   const storeEnhancers = [middlewareEnhancer];

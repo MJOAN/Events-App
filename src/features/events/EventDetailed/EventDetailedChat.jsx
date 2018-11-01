@@ -33,7 +33,7 @@ class EventDetailedChat extends Component {
           textAlign="center"
           attached="top"
           inverted
-          color="teal"
+          color="blue"
           style={{ border: "none" }}
         >
           <Header>Chat about this event</Header>

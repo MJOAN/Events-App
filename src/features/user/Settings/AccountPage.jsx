@@ -39,7 +39,7 @@ const AccountPage = ({
       {providerId &&
         providerId === "password" && (
           <div>
-            <Header color="teal" sub content="Change password" />
+            <Header color="grey" sub content="Change password" />
             <p>Use this form to update your account settings</p>
             <Form onSubmit={handleSubmit(updatePassword)}>
               <Field
@@ -81,7 +81,7 @@ const AccountPage = ({
       {providerId &&
         providerId === "facebook.com" && (
           <div>
-            <Header color="teal" sub content="Facebook Account" />
+            <Header color="grey" sub content="Facebook Account" />
             <p>Please visit Facebook to update your account settings</p>
             <Button type="button" color="facebook">
               <Icon name="facebook" />
@@ -93,7 +93,7 @@ const AccountPage = ({
       {providerId &&
         providerId === "google.com" && (
           <div>
-            <Header color="teal" sub content="Google Account" />
+            <Header color="grey" sub content="Google Account" />
             <p>Please visit Google to update your account settings</p>
             <Button type="button" color="google plus">
               <Icon name="google plus" />

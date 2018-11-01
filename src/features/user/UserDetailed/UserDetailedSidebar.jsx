@@ -10,13 +10,13 @@ const UserDetailedSidebar = ({ isCurrentUser }) => {
           <Button
             as={Link}
             to="/settings"
-            color="teal"
+            color="blue"
             fluid
             basic
             content="Edit Profile"
           />
         ) : (
-          <Button color="teal" fluid basic content="Follow user" />
+          <Button color="blue" fluid basic content="Follow user" />
         )}
       </Segment>
     </Grid.Column>

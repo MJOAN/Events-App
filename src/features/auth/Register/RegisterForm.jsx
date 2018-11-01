@@ -55,7 +55,7 @@ const RegisterForm = ({
             disabled={invalid || submitting}
             fluid
             size="large"
-            color="teal"
+            color="grey"
           >
             Register
           </Button>

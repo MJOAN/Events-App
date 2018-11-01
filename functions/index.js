@@ -11,7 +11,7 @@ const newActivity = (type, event, id) => {
     photoURL: event.hostPhotoURL,
     timestamp: admin.firestore.FieldValue.serverTimestamp(),
     hostUid: event.hostUid,
-    eventId: event.id
+    eventId: id
   };
 };
 
@@ -20,17 +20,16 @@ exports.createActivity = functions.firestore
   .onCreate(event => {
     let newEvent = event.data();
     console.log("newEvent", newEvent);
-
-    //important that every field has value
     const activity = newActivity("newEvent", newEvent, event.id);
+
     console.log(activity);
-    // don't have access to async so have to use then promises
+
     return admin
       .firestore()
       .collection("activity")
       .add(activity)
       .then(docRef => {
-        return console.log("Activity created with ID: ", docRef.id);
+        return console.log("Activity created with id: ", docRef.id);
       })
       .catch(err => {
         return console.log("Error adding activity", err);

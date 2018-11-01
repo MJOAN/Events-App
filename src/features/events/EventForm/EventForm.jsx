@@ -1,19 +1,18 @@
-/* global google */
-
+/*global google*/
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { reduxForm, Field } from "redux-form";
 import { withFirestore } from "react-redux-firebase";
-import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 import Script from "react-load-script";
-import { Segment, Form, Button, Grid, Header } from "semantic-ui-react";
-import { createEvent, updateEvent, cancelToggle } from "../eventActions";
+import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
+import { Segment, Form, Button, Grid, Header, Icon } from "semantic-ui-react";
 import {
   composeValidators,
   combineValidators,
   isRequired,
   hasLengthGreaterThan
 } from "revalidate";
+import { createEvent, updateEvent, cancelToggle } from "../eventActions";
 import TextInput from "../../../app/common/form/TextInput";
 import TextArea from "../../../app/common/form/TextArea";
 import SelectInput from "../../../app/common/form/SelectInput";
@@ -22,9 +21,11 @@ import PlaceInput from "../../../app/common/form/PlaceInput";
 
 const mapState = (state, ownProps) => {
   let event = {};
+
   if (state.firestore.ordered.events && state.firestore.ordered.events[0]) {
     event = state.firestore.ordered.events[0];
   }
+
   return {
     initialValues: event,
     event
@@ -36,6 +37,15 @@ const actions = {
   updateEvent,
   cancelToggle
 };
+
+const category = [
+  { key: "drinks", text: "Drinks", value: "drinks" },
+  { key: "culture", text: "Culture", value: "culture" },
+  { key: "film", text: "Film", value: "film" },
+  { key: "food", text: "Food", value: "food" },
+  { key: "music", text: "Music", value: "music" },
+  { key: "travel", text: "Travel", value: "travel" }
+];
 
 const validate = combineValidators({
   title: isRequired({ message: "The event title is required" }),
@@ -50,15 +60,6 @@ const validate = combineValidators({
   venue: isRequired("venue"),
   date: isRequired("date")
 });
-
-const category = [
-  { key: "drinks", text: "Drinks", value: "drinks" },
-  { key: "culture", text: "Culture", value: "culture" },
-  { key: "film", text: "Film", value: "film" },
-  { key: "food", text: "Food", value: "food" },
-  { key: "music", text: "Music", value: "music" },
-  { key: "travel", text: "Travel", value: "travel" }
-];
 
 class EventForm extends Component {
   state = {
@@ -77,11 +78,7 @@ class EventForm extends Component {
     await firestore.unsetListener(`events/${match.params.id}`);
   }
 
-  handleScriptLoaded = () => {
-    this.setState({
-      scriptLoaded: true
-    });
-  };
+  handleScriptLoaded = () => this.setState({ scriptLoaded: true });
 
   handleCitySelect = selectedCity => {
     geocodeByAddress(selectedCity)
@@ -128,41 +125,41 @@ class EventForm extends Component {
     return (
       <Grid>
         <Script
-          url="https://maps.googleapis.com/maps/api/js?key=AIzaSyA6poNHzHyxN8mL_gQphg2gBP6wRn_vMHw&libraries=places"
+          url="https://maps.googleapis.com/maps/api/js?key=REACT_APP_API_KEY&libraries=places"
           onLoad={this.handleScriptLoaded}
         />
-
         <Grid.Column width={10}>
           <Segment>
-            <Header sub color="teal" content="Event Details" />
+            <Icon name="marker" size="large" color="grey" />
+            <Header sub color="grey" content="Event Details" />
             <Form onSubmit={this.props.handleSubmit(this.onFormSubmit)}>
               <Field
                 name="title"
                 type="text"
                 component={TextInput}
-                placeholder="Title"
+                placeholder="Give your event a name"
               />
               <Field
                 name="category"
                 type="text"
                 component={SelectInput}
                 options={category}
-                placeholder="Category"
+                placeholder="What is your event about"
               />
               <Field
                 name="description"
                 type="text"
                 component={TextArea}
                 rows={3}
-                placeholder="Description"
+                placeholder="Tell us about your event"
               />
-              <Header sub color="teal" content="Event Location details" />
+              <Header sub color="grey" content="Event Location details" />
               <Field
                 name="city"
                 type="text"
                 component={PlaceInput}
                 options={{ types: ["(cities)"] }}
-                placeholder="City"
+                placeholder="Event city"
                 onSelect={this.handleCitySelect}
               />
               {this.state.scriptLoaded && (
@@ -175,7 +172,7 @@ class EventForm extends Component {
                     radius: 1000,
                     types: ["establishment"]
                   }}
-                  placeholder="Place"
+                  placeholder="Event venue"
                   onSelect={this.handleVenueSelect}
                 />
               )}
@@ -186,7 +183,7 @@ class EventForm extends Component {
                 dateFormat="YYYY-MM-DD HH:mm"
                 timeFormat="HH:mm"
                 showTimeSelect
-                placeholder="Date & Time"
+                placeholder="Date and time of event"
               />
               <Button
                 disabled={invalid || submitting || pristine}
@@ -223,4 +220,3 @@ export default withFirestore(
     )
   )
 );
-// compose function will pretty this up!

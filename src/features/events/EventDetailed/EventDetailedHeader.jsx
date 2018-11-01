@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import format from "date-fns/format";
 
 const eventImageStyle = {
-  filter: "brightness(30%)"
+  filter: "brightness(40%)"
 };
 
 const eventImageTextStyle = {
@@ -17,16 +17,19 @@ const eventImageTextStyle = {
 };
 
 const EventDetailedHeader = ({
+  openModal,
+  authenticated,
+  loading,
   event,
   isHost,
   isGoing,
   goingToEvent,
   cancelGoingToEvent
 }) => {
-  // let eventDate;
-  // if (event.date) {
-  //   eventDate = event.date.toDate();
-  // }
+  let eventDate;
+  if (event.date) {
+    eventDate = event.date.toDate();
+  }
   return (
     <Segment.Group>
       <Segment basic attached="top" style={{ padding: "0" }}>
@@ -45,9 +48,9 @@ const EventDetailedHeader = ({
                   content={event.title}
                   style={{ color: "white" }}
                 />
-                <p>{format(event.date, "dddd Do MMMM")}</p>
+                <p>{format(eventDate, "dddd Do MMMM")}</p>
                 <p>
-                  Assigned to <strong>{event.hostedBy}</strong>
+                  Hosted by <strong>{event.hostedBy}</strong>
                 </p>
               </Item.Content>
             </Item>

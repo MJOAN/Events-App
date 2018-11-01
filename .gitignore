@@ -63,9 +63,12 @@ typings/
 
 # firebase
 functions/node_modules/**
+/src/app/config
+
 
 # env files
 .env
 .env.example
 .env.local
 .env.staging
+

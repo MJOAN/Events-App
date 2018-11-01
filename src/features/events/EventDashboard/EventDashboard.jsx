@@ -11,8 +11,7 @@ const query = [
   {
     collection: "activity",
     orderBy: ["timestamp", "desc"],
-    limit: 5,
-    contextRef: {}
+    limit: 5
   }
 ];
 
@@ -30,12 +29,13 @@ class EventDashboard extends Component {
   state = {
     moreEvents: false,
     loadingInitial: true,
-    loadedEvents: []
+    loadedEvents: [],
+    contextRef: {}
   };
 
   async componentDidMount() {
     let next = await this.props.getEventsForDashboard();
-    console.log(next);
+    console.log("next", next);
 
     if (next && next.docs && next.docs.length > 1) {
       this.setState({
@@ -72,6 +72,7 @@ class EventDashboard extends Component {
     const { moreEvents, loadedEvents } = this.state;
     // if (!isLoaded(events) || isEmpty(events))
     if (this.state.loadingInitial) return <LoadingComponent inverted={true} />;
+
     return (
       <Grid>
         <Grid.Column width={10}>
