@@ -4,7 +4,7 @@
 *This is the home page!*
 
 <br /> 
-Please check out [Events App](https://events-app-220700.firebaseapp.com) to study the app's basic functionality which is still in development! This app is an example of using Google Maps, Firebase, Firestore, Cloud Functions, Authentication, React, Redux Thunk and Semantic-UI React to build a web based application to schedule events, and meetings with your business partners to help keep moving your business ideas and projects forward! A huge thank you to [Neil Cummings](https://www.udemy.com/user/neil-cummings-2/) for providing the tutorial on difficult aspects of getting Redux Thunk setup with Firestore Beta! 
+Please check out [my demo](https://events-app-220700.firebaseapp.com) to study the app's basic functionality which is still in development! This app is an example of using Google Maps, Firebase, Firestore, Cloud Functions, Authentication, React, Redux Thunk and Semantic-UI React to build a web based application to schedule events, and meetings with your business partners to help keep moving your business ideas and projects forward! A huge thank you to [Neil Cummings](https://www.udemy.com/user/neil-cummings-2/) for providing the tutorial on difficult aspects of getting Redux Thunk setup with Firestore Beta! 
 <br />
 
 ![screenshot-3](screenshot3.png)<br />
@@ -38,7 +38,7 @@ Please check out [Events App](https://events-app-220700.firebaseapp.com) to stud
 *Firestore collection and document schema for `users`, `events` and we added `activities` and `event_attendees` as well. Understanding what your collections are is a great practice for naming conventions as well.*
 
 ![screenshot-8](screenshot11.png)<br />
-*Firebase Cloud Functions! This was my first experience with a almost serverless backend. Essentially you are running "functions" stored in `Cloud Functions` that get triggered by Firebase code you implement and HTTPS requests. Fascinating!! In this case there was a createActivity function and cancelActivity function to handle when users were "creating" and "canceling" events! 
+*Firebase Cloud Functions! This was my first experience with a almost serverless backend. Essentially you are running "functions" stored in `Cloud Functions` that get triggered by Firebase code you implement and HTTPS requests. Fascinating!! In this case there was a createActivity function and cancelActivity function to handle when users were "creating" and "canceling" events!*
 
 ![screenshot-8](screenshot13.png)<br />
 *The wonderful and great "QuerySnap!" to the rescue! Lots of "snaps" in Firebase and Firestore (and we give them props and snaps as well for being super fast!) which essentially equate to "snapshots" but, this was used in code time and again to help keep "ref" to certain variables created and getting the right schema setup for your document.*
