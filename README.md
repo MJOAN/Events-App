@@ -1,10 +1,10 @@
 # React, Redux, Firebase & Firestore => Events App!
 
 ![screenshot-1](screenshot1.png)<br />
-*This is the home page!*
+*This is the home page!*<br />
 
 <br /> 
-Please check out [my demo](https://events-app-220700.firebaseapp.com) to study the app's basic functionality which is still in development! This app is an example of using Google Maps, Firebase, Firestore, Cloud Functions, Authentication, React, Redux Thunk and Semantic-UI React to build a web based application to schedule events, and meetings with your business partners to help keep moving your business ideas and projects forward! A huge thank you to [Neil Cummings](https://www.udemy.com/user/neil-cummings-2/) for providing the tutorial on difficult aspects of getting Redux Thunk setup with Firestore Beta! 
+Please check out [my demo](https://events-app-220700.firebaseapp.com) to study the app's basic functionality which is still in development! This app is an example of using Google Maps, Firebase, Firestore, Cloud Functions, Authentication, React, Redux Thunk and Semantic-UI React to build a web based application to schedule events, and meetings with your business partners to help keep moving your business ideas and projects forward! A huge thank you to [Neil Cummings](https://www.udemy.com/user/neil-cummings-2/) for providing the tutorial on difficult aspects of getting Redux Thunk setup with Firestore Beta!<br />
 <br />
 
 ![screenshot-3](screenshot3.png)<br />
