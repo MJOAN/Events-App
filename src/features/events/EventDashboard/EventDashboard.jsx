@@ -28,7 +28,7 @@ const actions = {
 class EventDashboard extends Component {
   state = {
     moreEvents: false,
-    loadingInitial: true, // changed from true to false to stop loader at home page before login
+    loadingInitial: true,
     loadedEvents: [],
     contextRef: {}
   };
@@ -72,7 +72,6 @@ class EventDashboard extends Component {
   render() {
     const { loading, activities } = this.props;
     const { moreEvents, loadedEvents } = this.state;
-    // if (!isLoaded(events) || isEmpty(events))
     if (this.state.loadingInitial) return <LoadingComponent inverted={true} />;
 
     return (
