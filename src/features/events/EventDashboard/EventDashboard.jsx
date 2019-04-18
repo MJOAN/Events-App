@@ -28,20 +28,22 @@ const actions = {
 class EventDashboard extends Component {
   state = {
     moreEvents: false,
-    loadingInitial: false, // changed from true to false to stop loader at home page before login
+    loadingInitial: true, // changed from true to false to stop loader at home page before login
     loadedEvents: [],
     contextRef: {}
   };
 
   async componentDidMount() {
     let next = await this.props.getEventsForDashboard();
-    console.log("next", next);
-
     if (next && next.docs && next.docs.length > 1) {
       this.setState({
         moreEvents: true,
         loadingInitial: false
       });
+    } else {
+      this.setState({
+        loadingInitial: false
+      })
     }
   }
 
