@@ -28,7 +28,7 @@ const actions = {
 class EventDashboard extends Component {
   state = {
     moreEvents: false,
-    loadingInitial: true,
+    loadingInitial: false, // changed from true to false to stop loader at home page before login
     loadedEvents: [],
     contextRef: {}
   };

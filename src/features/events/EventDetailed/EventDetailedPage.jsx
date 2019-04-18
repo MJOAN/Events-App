@@ -78,6 +78,7 @@ class EventDetailedPage extends Component {
     const isHost = event.hostUid === auth.uid;
     const isGoing = attendees && attendees.some(a => a.id === auth.uid);
     const chatTree = !isEmpty(eventChat) && createDataTree(eventChat);
+    const authenticated = auth.isLoaded && !auth.isEmpty;
     const loadingEvent = requesting[`events/${match.params.id}`];
 
     if (loadingEvent || this.state.initialLoading)
@@ -94,11 +95,9 @@ class EventDetailedPage extends Component {
             cancelGoingToEvent={cancelGoingToEvent}
           />
           <EventDetailedInfo event={event} />
-          <EventDetailedChat
-            eventChat={chatTree}
-            addEventComment={addEventComment}
-            eventId={event.id}
-          />
+          {authenticated &&
+            <EventDetailedChat eventChat={chatTree} 
+            addEventComment={addEventComment} eventId={event.id} />}
         </Grid.Column>
         <Grid.Column width={6}>
           <EventDetailedSidebar attendees={attendees} />

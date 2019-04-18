@@ -8,6 +8,6 @@ export const UserIsAuthenticated = connectedReduxRedirect({
   authenticatedSelector: ({ firebase: { auth } }) =>
     auth.isLoaded && !auth.isEmpty,
   redirectAction: newLoc => dispatch => {
-    dispatch(openModal("unauthModal"));
+    dispatch(openModal("UnauthModal"));
   }
 });
